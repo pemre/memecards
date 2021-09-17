@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MemeCards - Meeting cards for your physical, digital, virtual meetings</title>
+    <meta name="author" content="Emre Piskin">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="app"></div>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+<script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+<!--<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>-->
+<!--<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>-->
+<script type="text/babel" src="components/Card.js"></script>
+<script type="text/babel" src="components/GitHubLinks.js"></script>
+<script type="text/babel" src="components/Image.js"></script>
+<script type="text/babel" src="components/Text.js"></script>
+<script src="cards.js"></script>
+<script type="text/babel">
+  const App = () => {
+    const [cardToShow, setCardToShow] = React.useState('');
+
+    const CardList = () => {
+      return (
+        <React.Fragment>
+          <div id="header">
+            MemeCards
+          </div>
+          <div id="subheader">
+            Meeting cards for your physical, digital, virtual meetings. No need to print,
+            just use your mobile device and click on a card!
+            <GitHubLinks />
+          </div>
+          <div className="row">
+            {cards.map((card) =>
+              <Card {...card} key={card.name} onClickHandler={setCardToShow} />)
+            }
+          </div>
+        </React.Fragment>
+      )
+    };
+
+    const CardFullscreen = (card) => {
+      return (
+        <div
+          className="card-fullscreen-wrapper"
+          onClick={() => setCardToShow('')}
+        >
+          <Card {...card} multiplier={4} />
+        </div>
+      )
+    };
+
+    return (
+      <React.Fragment>
+        {cardToShow
+          ? <CardFullscreen {...cards.find(({name}) => name === cardToShow)} />
+          : <CardList />
+        }
+      </React.Fragment>
+    )
+  };
+
+  ReactDOM.render(<App/>, document.querySelector('#app'));
+</script>
+</body>
+</html>
