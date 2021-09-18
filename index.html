@@ -10,21 +10,62 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 </head>
 <body>
 <div id="app"></div>
-<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
-<script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+<script src="vendor/babel.min.js"></script>
+<script src="vendor/react.production.min.js" crossorigin></script>
+<script src="vendor/react-dom.production.min.js" crossorigin></script>
+<!--<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>-->
+<!--<script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>-->
+<!--<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>-->
 <!--<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>-->
 <!--<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>-->
 <script type="text/babel" src="components/Card.js"></script>
 <script type="text/babel" src="components/GitHubLinks.js"></script>
 <script type="text/babel" src="components/Image.js"></script>
 <script type="text/babel" src="components/Text.js"></script>
+<script type="text/babel" src="hooks/useFullscreenStatus.js"></script>
 <script src="cards.js"></script>
+<script>
+  // Check that service workers are supported
+  if ('serviceWorker' in navigator) {
+    // Use the window load event to keep the page load performant
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js');
+    });
+  }
+</script>
 <script type="text/babel">
   const App = () => {
+    // <editor-fold desc="Fullscreen">
+    // @see https://github.com/Darth-Knoppix/example-react-fullscreen/blob/master/src/MaximizableView.js
+    const maximizableElement = React.useRef(null);
+    let isFullscreen, setIsFullscreen;
+    let errorMessage;
+
+    try {
+      [isFullscreen, setIsFullscreen] = useFullscreenStatus(maximizableElement);
+    } catch (e) {
+      errorMessage = "Fullscreen not supported";
+      console.error(errorMessage, e);
+      isFullscreen = false;
+      setIsFullscreen = undefined;
+    }
+
+    const enterFullscreen = (cardName) => {
+      setIsFullscreen();
+      setCardToShow(cardName);
+    };
+
+    const exitFullscreen = () => {
+      setCardToShow('');
+      document.exitFullscreen();
+    };
+    // </editor-fold>
+
     const [cardToShow, setCardToShow] = React.useState('');
 
     const CardList = () => {
@@ -40,7 +81,7 @@
           </div>
           <div className="row">
             {cards.map((card) =>
-              <Card {...card} key={card.name} onClickHandler={setCardToShow} />)
+              <Card {...card} key={card.name} onClickHandler={enterFullscreen} />)
             }
           </div>
         </React.Fragment>
@@ -51,7 +92,7 @@
       return (
         <div
           className="card-fullscreen-wrapper"
-          onClick={() => setCardToShow('')}
+          onClick={exitFullscreen}
         >
           <Card {...card} multiplier={4} />
         </div>
@@ -59,12 +100,12 @@
     };
 
     return (
-      <React.Fragment>
+      <div ref={maximizableElement}>
         {cardToShow
           ? <CardFullscreen {...cards.find(({name}) => name === cardToShow)} />
           : <CardList />
         }
-      </React.Fragment>
+      </div>
     )
   };
 

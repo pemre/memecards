@@ -1,3 +1,14 @@
+/**
+ * Card type {
+ *   name: string,
+ *   backgroundColor?: string,
+ *   items: [{
+ *     size: number,
+ *     type: string, // 'text' | 'image'
+ *     value: string
+ *   }],
+ * }
+ */
 const cards = [
   {
     name: 'Need a break',
@@ -116,6 +127,126 @@ const cards = [
         type: 'text',
         value: 'UNMUTE',
         size: 4,
+      },
+    ],
+  },
+  {
+    name: 'Rejected',
+    items: [
+      {
+        type: 'image',
+        value: './images/sad.png',
+      },
+      {
+        type: 'image',
+        value: './images/rejected.png',
+      },
+    ],
+  },
+  {
+    name: 'Approved',
+    items: [
+      {
+        type: 'image',
+        value: './images/approved.png',
+      },
+      {
+        type: 'image',
+        value: './images/proud.gif',
+      },
+    ],
+  },
+  {
+    name: 'Can\'t Hear You',
+    items: [
+      {
+        type: 'text',
+        value: 'CAN\'T HEAR',
+        size: 5,
+      },
+      {
+        type: 'image',
+        value: './images/hear.jpg',
+      },
+      {
+        type: 'text',
+        value: 'YOU',
+        size: 6,
+      },
+    ],
+  },
+  {
+    name: '5 Minutes left',
+    backgroundColor: 'rgb(0 160 0)',
+    items: [
+      {
+        type: 'text',
+        value: '5',
+        size: 5,
+      },
+      {
+        type: 'text',
+        value: 'MINUTES',
+        size: 4,
+      },
+      {
+        type: 'image',
+        value: './images/yoda.png',
+      },
+      {
+        type: 'text',
+        value: 'LEFT',
+        size: 5,
+      },
+    ],
+  },
+  {
+    name: '3 Minutes left',
+    backgroundColor: 'rgb(0 0 160)',
+    items: [
+      {
+        type: 'text',
+        value: '3',
+        size: 5,
+      },
+      {
+        type: 'text',
+        value: 'MINUTES',
+        size: 4,
+      },
+      {
+        type: 'image',
+        value: './images/yoda.png',
+      },
+      {
+        type: 'text',
+        value: 'LEFT',
+        size: 5,
+      },
+    ],
+  },
+  {
+    name: '1 Minute left',
+    backgroundColor: 'rgb(180 0 0)',
+    items: [
+      {
+        type: 'text',
+        value: '1',
+        size: 5,
+      },
+      {
+        type: 'text',
+        value: 'MINUTE',
+        size: 5,
+      },
+      {
+        type: 'image',
+        value: './images/yoda.png',
+      },
+      {
+        type: 'text',
+        value: 'LEFT',
+        size: 5,
       },
     ],
   },
