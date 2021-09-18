@@ -46,6 +46,10 @@ a:hover {
     margin-bottom: 3vw;
 }
 
+#error {
+    margin-bottom: 3vw;
+}
+
 .row {
     display: flex;
     flex-direction: row;

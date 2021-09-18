@@ -16,11 +16,9 @@
 <body>
 <div id="app"></div>
 <script src="vendor/babel.min.js"></script>
-<script src="vendor/react.production.min.js" crossorigin></script>
-<script src="vendor/react-dom.production.min.js" crossorigin></script>
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/react-dom.production.min.js"></script>
 <!--<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>-->
-<!--<script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>-->
-<!--<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>-->
 <!--<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>-->
 <!--<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>-->
 <script type="text/babel" src="components/Card.js"></script>
@@ -49,10 +47,9 @@
     try {
       [isFullscreen, setIsFullscreen] = useFullscreenStatus(maximizableElement);
     } catch (e) {
-      errorMessage = "Fullscreen not supported";
-      console.error(errorMessage, e);
+      errorMessage = "Fullscreen is not supported on this browser";
       isFullscreen = false;
-      setIsFullscreen = undefined;
+      setIsFullscreen = () => {};
     }
 
     const enterFullscreen = (cardName) => {
@@ -79,6 +76,7 @@
             just use your mobile device and click on a card!
             <GitHubLinks />
           </div>
+          <div id="error">{errorMessage}</div>
           <div className="row">
             {cards.map((card) =>
               <Card {...card} key={card.name} onClickHandler={enterFullscreen} />)
@@ -100,7 +98,7 @@
     };
 
     return (
-      <div ref={maximizableElement}>
+      <div ref={maximizableElement} style={{height: '100%'}}>
         {cardToShow
           ? <CardFullscreen {...cards.find(({name}) => name === cardToShow)} />
           : <CardList />
