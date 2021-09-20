@@ -46,18 +46,17 @@ a:hover {
     margin-bottom: 3vw;
 }
 
-#error,
-#warning {
+.notification {
     font-size: 2vw;
     margin-bottom: 3vw;
 }
 
-#warning {
+.warning-portrait {
     display: none;
 }
 
 @media screen and (orientation:landscape) {
-    #warning {
+    .warning-portrait {
         display: block;
     }
 }

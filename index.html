@@ -76,8 +76,12 @@
             just use your mobile device and click on a card!
             <GitHubLinks />
           </div>
-          <div id="error">{errorMessage}</div>
-          <div id="warning">⚠️ This app works best on portrait screen 📲</div>
+          <div className="notification">Add it to home screen:
+            <a href="https://www.wikihow.tech/Add-a-Link-Button-to-the-Home-Screen-of-an-iPhone">iOS</a>
+            <a href="https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android">Android</a>
+          </div>
+          <div className="notification">{errorMessage}</div>
+          <div className="notification warning-portrait">⚠️ This app works best on portrait screen 📲</div>
           <div className="row">
             {cards.map((card) =>
               <Card {...card} key={card.name} onClickHandler={enterFullscreen} />)
